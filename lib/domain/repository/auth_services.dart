@@ -34,11 +34,7 @@ class AuthService {
 
   //signOut
   Future<void> signOut() async {
-    // try {
     await _auth.signOut();
-    // } catch (e) {
-    //   log("Somthing went wrong while LognOut");
-    // }
   }
   //forgot---
   Future<void>forgotPassword(String email)async{

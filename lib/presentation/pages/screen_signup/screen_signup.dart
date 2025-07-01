@@ -1,14 +1,11 @@
-import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:task/core/until/validation.dart';
 import 'package:task/presentation/bloc/auth_bloc/auth_bloc.dart';
 import 'package:task/presentation/pages/screen_home/screen_home.dart';
-import 'package:task/presentation/widgets/email_field_widget.dart';
+import 'package:task/presentation/pages/screen_signup/session/signup_button_session.dart';
+import 'package:task/presentation/pages/screen_signup/session/signup_session.dart';
 import 'package:task/presentation/widgets/loading_widget.dart';
-import 'package:task/presentation/widgets/login_and_signup_button.dart';
-import 'package:task/presentation/widgets/password_field_widget.dart';
 import 'package:task/presentation/widgets/showDiolog.dart';
 
 class ScreenSignup extends StatelessWidget {
@@ -49,65 +46,10 @@ class ScreenSignup extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    Text(
-                      'Sign Up',
-                      style: TextStyle(
-                        fontSize: 32,
-                        fontWeight: FontWeight.bold,
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
-                    SizedBox(height: 40),
-
-                    // Name field
-                    TextFormField(
-                      validator:
-                          (value) => Validation.nameValidate(value: value),
-                      controller: nameController,
-                      decoration: InputDecoration(
-                        labelText: 'Name',
-                        border: OutlineInputBorder(),
-                      ),
-                    ),
-                    SizedBox(height: 20),
-
-                    // Email field
-                    EmailFieldWidget(
-                      emailController: emailController,
-                      validator: (value) {
-                        return Validation.emailValidation(value);
-                      },
-                    ),
-                    SizedBox(height: 20),
-
-                    // Password field
-                    PasswordFieldWidget(
-                      passwordController: passwordController,
-                      validator:
-                          (value) => Validation.passWordValidation(value),
-                    ),
-                    SizedBox(height: 30),
-
+                    //SignUp field session(name,email,password)
+                    SignUpSession(nameController: nameController, emailController: emailController, passwordController: passwordController),
                     // Sign Up button
-                    MyBottonWidget(
-                      color: Colors.white,
-                      onTap: () {
-                        if (_formKey.currentState!.validate()) {
-                          log(" Validated--------------------");
-                          context.read<AuthBloc>().add(
-                            SignUpEvent(
-                              name: nameController.text.trim(),
-                              email: emailController.text.trim(),
-                              password: passwordController.text.trim(),
-                            ),
-                          );
-                          // _signIn(context);
-                        } else {
-                          print("Not Validated--------------------");
-                        }
-                      },
-                      text: "Sign Up",
-                    ),
+                    SignupButtonSession(formKey: _formKey, nameController: nameController, emailController: emailController, passwordController: passwordController),
                   ],
                 ),
               ),
@@ -118,3 +60,5 @@ class ScreenSignup extends StatelessWidget {
     );
   }
 }
+
+
