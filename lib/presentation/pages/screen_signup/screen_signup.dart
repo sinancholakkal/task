@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:task/presentation/widgets/email_field_widget.dart';
+import 'package:task/presentation/widgets/login_and_signup_button.dart';
+import 'package:task/presentation/widgets/password_field_widget.dart';
 
-class SignUpPage extends StatelessWidget {
+class ScreenSignup extends StatelessWidget {
   final TextEditingController nameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
@@ -45,35 +48,20 @@ class SignUpPage extends StatelessWidget {
                 SizedBox(height: 20),
 
                 // Email field
-                TextField(
-                  controller: emailController,
-                  decoration: InputDecoration(
-                    labelText: 'Email',
-                    border: OutlineInputBorder(),
-                  ),
-                  keyboardType: TextInputType.emailAddress,
-                ),
+                EmailFieldWidget(emailController: emailController),
                 SizedBox(height: 20),
 
                 // Password field
-                TextField(
-                  controller: passwordController,
-                  decoration: InputDecoration(
-                    labelText: 'Password',
-                    border: OutlineInputBorder(),
-                  ),
-                  obscureText: true,
-                ),
+                PasswordFieldWidget(passwordController: passwordController),
                 SizedBox(height: 30),
 
                 // Sign Up button
-                ElevatedButton(
-                  onPressed: _signUp,
-                  child: Text('Sign Up'),
-                  style: ElevatedButton.styleFrom(
-                    padding: EdgeInsets.symmetric(vertical: 16),
-                    textStyle: TextStyle(fontSize: 18),
-                  ),
+                MyBottonWidget(
+                  color: Colors.white,
+                  onTap: () {
+                    
+                  },
+                  text: "Sign Up",
                 ),
               ],
             ),
