@@ -8,16 +8,7 @@ class ScreenSignup extends StatelessWidget {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
-  void _signUp() {
-    String name = nameController.text;
-    String email = emailController.text;
-    String password = passwordController.text;
 
-    // Add your signup logic here
-    print('Name: $name');
-    print('Email: $email');
-    print('Password: $password');
-  }
 
   @override
   Widget build(BuildContext context) {
