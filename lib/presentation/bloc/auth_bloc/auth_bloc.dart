@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:meta/meta.dart';
 import 'package:task/domain/repository/auth_services.dart';
@@ -29,6 +30,20 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         }
       },
     );
+    on<SignInEvent>(
+      (event, emit) async {
+        emit(AuthLoadingState());
+        await Future.delayed(Duration(seconds: 2));
+        try {
+          final user = await _authService.signInUserWithEmailAndPassword(
+              event.email, event.password,);
+          emit(AuthSuccessState(user: user));
+        } on FirebaseAuthException catch (e) {
+          log("Somthing wrong while SignIn ${e.code}");
+          emit(AuthErrorState(errorMessage: e.code));
+        }
+      },
+    );
     on<SignUpEvent>(
       (event, emit) async {
         emit(AuthLoadingState());
@@ -40,6 +55,11 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
             emit(AuthErrorState(errorMessage: "User creation failed"));
           }else{
             emit(AuthSuccessState(user: user));
+            FirebaseFirestore.instance.collection("user").doc(user.uid).set({
+              "name":event.name,
+              "email":event.email,
+              "password":event.password
+            });
           }
         } on FirebaseAuthException catch (e) {
           log("Somthing wrong while Sign Up ${e.code}");

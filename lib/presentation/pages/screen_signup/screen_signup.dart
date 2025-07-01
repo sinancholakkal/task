@@ -24,12 +24,13 @@ class ScreenSignup extends StatelessWidget {
         if (state is AuthLoadingState) {
           loadingWidget(context);
         } else if (state is AuthSuccessState) {
-          Navigator.push(
+          Navigator.pushAndRemoveUntil(
             context,
             MaterialPageRoute(builder: (_) => ScreenHome()),
+            (route) => false,
           );
         } else if (state is AuthErrorState) {
-          Navigator.pop(context); // close loading dialog if open
+          Navigator.pop(context);
           showDiolog(
             context: context,
             title: "Error",
@@ -95,6 +96,7 @@ class ScreenSignup extends StatelessWidget {
                           log(" Validated--------------------");
                           context.read<AuthBloc>().add(
                             SignUpEvent(
+                              name: nameController.text.trim(),
                               email: emailController.text.trim(),
                               password: passwordController.text.trim(),
                             ),

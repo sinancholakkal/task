@@ -8,10 +8,7 @@ Future<dynamic> loadingWidget(BuildContext context) {
             return WillPopScope(
               onWillPop: () async => false,
               child: Center(
-                child: Image.asset(
-                  height: 60,
-                  "asset/loading.gif",
-                ), // Loading indicator
+                child: CircularProgressIndicator(), // Loading indicator
               ),
             );
           },
