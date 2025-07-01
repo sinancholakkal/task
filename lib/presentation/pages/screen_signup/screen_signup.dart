@@ -19,25 +19,25 @@ class ScreenSignup extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return  BlocListener<AuthBloc, AuthState>(
-  listener: (context, state) {
-    if (state is AuthLoadingState) {
-      loadingWidget(context);
-    } else if (state is AuthSuccessState) {
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (_) => ScreenHome()),
-      );
-    } else if (state is AuthErrorState) {
-      Navigator.pop(context); // close loading dialog if open
-      showDiolog(
-        context: context,
-        title: "Error",
-        content: state.errorMessage,
-      );
-    }
-  },
-  child:Scaffold(
+    return BlocListener<AuthBloc, AuthState>(
+      listener: (context, state) {
+        if (state is AuthLoadingState) {
+          loadingWidget(context);
+        } else if (state is AuthSuccessState) {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (_) => ScreenHome()),
+          );
+        } else if (state is AuthErrorState) {
+          Navigator.pop(context); // close loading dialog if open
+          showDiolog(
+            context: context,
+            title: "Error",
+            content: state.errorMessage,
+          );
+        }
+      },
+      child: Scaffold(
         backgroundColor: Colors.white,
         body: Padding(
           padding: const EdgeInsets.all(24.0),
@@ -50,14 +50,18 @@ class ScreenSignup extends StatelessWidget {
                   children: [
                     Text(
                       'Sign Up',
-                      style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
+                      style: TextStyle(
+                        fontSize: 32,
+                        fontWeight: FontWeight.bold,
+                      ),
                       textAlign: TextAlign.center,
                     ),
                     SizedBox(height: 40),
-      
+
                     // Name field
                     TextFormField(
-                      validator: (value) => Validation.nameValidate(value: value),
+                      validator:
+                          (value) => Validation.nameValidate(value: value),
                       controller: nameController,
                       decoration: InputDecoration(
                         labelText: 'Name',
@@ -65,7 +69,7 @@ class ScreenSignup extends StatelessWidget {
                       ),
                     ),
                     SizedBox(height: 20),
-      
+
                     // Email field
                     EmailFieldWidget(
                       emailController: emailController,
@@ -74,21 +78,27 @@ class ScreenSignup extends StatelessWidget {
                       },
                     ),
                     SizedBox(height: 20),
-      
+
                     // Password field
                     PasswordFieldWidget(
                       passwordController: passwordController,
-                      validator: (value) => Validation.passWordValidation(value),
+                      validator:
+                          (value) => Validation.passWordValidation(value),
                     ),
                     SizedBox(height: 30),
-      
+
                     // Sign Up button
                     MyBottonWidget(
                       color: Colors.white,
                       onTap: () {
                         if (_formKey.currentState!.validate()) {
                           log(" Validated--------------------");
-                          context.read<AuthBloc>().add(SignUpEvent(email: emailController.text.trim(), password: passwordController.text.trim()));
+                          context.read<AuthBloc>().add(
+                            SignUpEvent(
+                              email: emailController.text.trim(),
+                              password: passwordController.text.trim(),
+                            ),
+                          );
                           // _signIn(context);
                         } else {
                           print("Not Validated--------------------");
@@ -102,8 +112,7 @@ class ScreenSignup extends StatelessWidget {
             ),
           ),
         ),
-      ) ,
-);
-
+      ),
+    );
   }
 }

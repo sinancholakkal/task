@@ -11,6 +11,24 @@ part 'auth_state.dart';
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final _authService = AuthService();
   AuthBloc() : super(AuthInitial()) {
+    on<CheckLoginStatusEvent>(
+      (event, emit) async {
+        bool? result;
+        try {
+          await Future.delayed(Duration(seconds: 2), () {
+            result = _authService.checkLoginStatus();
+          });
+
+          if (result == true) {
+            emit(AuthSuccessState());
+          } else {
+            emit(AuthUnSuccessState());
+          }
+        } catch (e) {
+          log("error $e");
+        }
+      },
+    );
     on<SignUpEvent>(
       (event, emit) async {
         emit(AuthLoadingState());
@@ -29,5 +47,19 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         }
       },
     );
+    on<SignOutEvent>(
+      (event, emit) async{
+        emit(AuthLoadingState());
+        await Future.delayed(Duration(milliseconds: 1000));
+        try {
+          _authService.signOut();
+          emit(AuthSuccessState());
+        } catch (e) {
+          log("Somthing wrong during signout $e");
+          emit(AuthErrorState(errorMessage: e.toString()));
+        }
+      },
+    );
   }
+  
 }

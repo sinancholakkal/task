@@ -3,7 +3,10 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:task/domain/model/note_model.dart';
+import 'package:task/domain/repository/auth_services.dart';
+import 'package:task/presentation/pages/screen_login/screen_login.dart';
 import 'package:task/presentation/widgets/note_card_widget.dart';
+import 'package:task/presentation/widgets/showDiolog.dart';
 
 class ScreenHome extends StatefulWidget {
   @override
@@ -99,6 +102,20 @@ class _ScreenHomeState extends State<ScreenHome> {
             ),
           ],
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          alertBox(context: context, onPressed: (){
+             AuthService().signOut();
+          Navigator.pushAndRemoveUntil(
+      context,
+      MaterialPageRoute(builder: (_) => ScreenLogin()),
+      (route) => false, 
+    
+          );
+          }, title: "Logout", content: "Are you sure want to logout your account?");
+        },
+        child: Icon(Icons.logout),
       ),
     );
   }

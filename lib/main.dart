@@ -6,6 +6,7 @@ import 'package:task/firebase_options.dart';
 import 'package:task/presentation/bloc/auth_bloc/auth_bloc.dart';
 import 'package:task/presentation/pages/screen_home/screen_home.dart';
 import 'package:task/presentation/pages/screen_login/screen_login.dart';
+import 'package:task/presentation/pages/splash_screen/splash_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -25,7 +26,7 @@ class MyApp extends StatelessWidget {
             providers: [BlocProvider(create: (context) => AuthBloc())],
             child: MaterialApp(
               debugShowCheckedModeBanner: false,
-              home: ScreenLogin(),
+              home: SplashScreen(),
             ),
           ),
     );
